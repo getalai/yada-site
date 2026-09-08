@@ -7,7 +7,14 @@
 <meta name="description" content="Yada is a small dictation app for Mac. Hold a key, say what you mean, let go. The words land wherever your cursor is. Simple, and almost free.">
 <meta property="og:title" content="Yada — hold a key, talk, let go">
 <meta property="og:description" content="A small dictation app for Mac. Hold a key, say what you mean, let go. Simple, and almost free.">
-<meta property="og:image" content="https://getalai.github.io/yada-site/icon.png">
+<meta property="og:image" content="https://getalai.github.io/yada-site/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://getalai.github.io/yada-site/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://getalai.github.io/yada-site/">
+<meta name="theme-color" content="#f6f3ed" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#131110" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon.png">
 <style>
@@ -26,10 +33,11 @@
     --bg-raised: #fdfbf7;
     --ink: #1e1b16;
     --ink-2: #5e5850;
-    --ink-3: #8a8378;
+    --ink-3: #756e63;
     --line: rgba(30, 27, 22, 0.12);
     --ember: #c4481f;
     --ember-hover: #a83a15;
+    --button-ink: #ffffff;
     --ember-soft: rgba(196, 72, 31, 0.1);
     --keycap: #ffffff;
     --keycap-shadow: rgba(30, 27, 22, 0.18);
@@ -43,10 +51,11 @@
       --bg-raised: #1c1917;
       --ink: #f1ece3;
       --ink-2: #aba396;
-      --ink-3: #7d766b;
+      --ink-3: #8a8377;
       --line: rgba(241, 236, 227, 0.14);
       --ember: #e0714b;
-      --ember-hover: #ee8a67;
+      --ember-hover: #d0623c;
+      --button-ink: #131110;
       --ember-soft: rgba(224, 113, 75, 0.14);
       --keycap: #26221f;
       --keycap-shadow: rgba(0, 0, 0, 0.5);
@@ -78,18 +87,19 @@
   .cta { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
   .button {
     display: inline-flex; align-items: center; gap: 10px;
-    background: var(--ember); color: #fff; text-decoration: none;
+    background: var(--ember); color: var(--button-ink); text-decoration: none;
     padding: 14px 22px; border-radius: 12px; font-weight: 600; font-size: 17px;
     transition: background 120ms ease, transform 120ms ease;
   }
   .button:hover { background: var(--ember-hover); }
+  :focus-visible { outline: 2px solid var(--ember); outline-offset: 3px; border-radius: 4px; }
+  .button:focus-visible { outline-color: var(--ink); border-radius: 12px; }
   .button:active { transform: translateY(1px); }
   .button svg { width: 18px; height: 18px; }
   .fine { font-size: 14px; color: var(--ink-3); }
-  .fine a { color: var(--ink-2); }
 
   /* The demo: a key gets held, words appear, the key lets go. */
-  .demo {
+  figure.demo {
     margin: 64px 0 0; padding: 36px 28px; border: 1px solid var(--line);
     border-radius: 18px; background: var(--bg-raised);
     display: grid; grid-template-columns: 96px 1fr; gap: 28px; align-items: center;
@@ -103,7 +113,7 @@
   .key .key-glyph { font-size: 32px; letter-spacing: -0.02em; }
   .key small { position: absolute; bottom: 10px; right: 12px; font-size: 11px; color: var(--ink-3); letter-spacing: 0.04em; }
   .key::after {
-    content: ''; position: absolute; inset: -6px; border-radius: 20px;
+    content: ''; position: absolute; inset: -6px; border-radius: 22px;
     border: 2px solid var(--ember); opacity: 0; transition: opacity 200ms ease;
   }
   .demo.held .key { transform: translateY(4px); box-shadow: 0 2px 0 var(--keycap-shadow), 0 1px 0 var(--line) inset; }
@@ -111,19 +121,21 @@
   .typed { font-family: var(--serif); font-size: 26px; line-height: 1.3; min-height: 2.6em; color: var(--ink); margin: 0; }
   .typed .w { opacity: 0; transition: opacity 180ms ease; }
   .typed .w.on { opacity: 1; }
-  .typed .cursor { display: inline-block; width: 2px; height: 1.05em; background: var(--ember); vertical-align: -0.15em; margin-left: 2px; animation: blink 1s steps(1) infinite; }
+  .typed .cursor { display: inline-block; width: 2px; height: 1.05em; background: var(--ember); vertical-align: -0.15em; margin-left: 2px; animation: blink 1s steps(1) infinite; transition: opacity 120ms ease; }
+  .demo:not(.held) .cursor { opacity: 0; animation: none; }
   @keyframes blink { 50% { opacity: 0; } }
   @media (prefers-reduced-motion: reduce) {
     .typed .cursor { animation: none; }
   }
 
   section { padding: 56px 0; border-top: 1px solid var(--line); }
-  h2 { font-family: var(--serif); font-weight: 400; font-size: 34px; letter-spacing: -0.015em; margin: 0 0 26px; }
+  h2 { font-family: var(--serif); font-weight: 400; font-size: 34px; line-height: 1.1; letter-spacing: -0.015em; margin: 0 0 24px; }
   .points { display: grid; gap: 28px; }
   .point h3 { font-size: 18px; margin: 0 0 6px; font-weight: 600; }
-  .point p { margin: 0; color: var(--ink-2); }
+  .point p { margin: 0; color: var(--ink-2); max-width: 600px; }
   ol.steps { list-style: none; padding: 0; margin: 0; counter-reset: s; display: grid; gap: 18px; }
   ol.steps li { display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: baseline; }
+  ol.steps li > span { max-width: 600px; }
   ol.steps li::before {
     counter-increment: s; content: counter(s);
     font-family: var(--serif); font-size: 26px; color: var(--ember); line-height: 1;
@@ -134,23 +146,24 @@
   }
   .faq dt { font-weight: 600; margin: 22px 0 4px; }
   .faq dt:first-child { margin-top: 0; }
-  .faq dd { margin: 0; color: var(--ink-2); }
+  .faq dd { margin: 0; color: var(--ink-2); max-width: 600px; }
 
   .why p { color: var(--ink-2); margin: 0 0 16px; max-width: 600px; }
   .price { margin-top: 28px; padding: 22px 24px; border: 1px solid var(--line); border-radius: 14px; background: var(--bg-raised); display: grid; gap: 6px; }
-  .price-now { font-family: var(--serif); font-size: 40px; line-height: 1; letter-spacing: -0.02em; }
+  .price-now { font-family: var(--serif); font-size: 32px; line-height: 1; letter-spacing: -0.02em; }
   .price-note { font-size: 15px; color: var(--ink-3); margin-left: 6px; }
-  .price-later { color: var(--ink-2); }
+  .price-later { color: var(--ink-2); max-width: 600px; }
 
-  .beta { background: var(--ember-soft); border-radius: 14px; padding: 18px 20px; margin-top: 36px; }
+  .beta { background: var(--bg-raised); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; margin-top: 36px; }
   .beta p { margin: 0; }
 
   footer { padding: 40px 0 56px; border-top: 1px solid var(--line); color: var(--ink-3); font-size: 14px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
-  footer a { color: var(--ink-2); text-decoration: none; }
+  footer a { color: var(--ink-2); text-decoration: none; display: inline-block; padding: 8px 0; }
   footer a:hover { text-decoration: underline; }
   footer .legal a { color: var(--ink-3); }
 
   @media (max-width: 560px) {
+    footer { flex-direction: column; gap: 4px; }
     .demo { grid-template-columns: 1fr; gap: 22px; padding: 28px 22px; }
     .key { width: 80px; height: 80px; font-size: 30px; }
     .typed { font-size: 22px; }
@@ -182,12 +195,12 @@
         <span class="fine">macOS 13 or later, Apple silicon. No account needed.</span>
       </div>
 
-      <div class="demo" aria-label="Animation: a key is held, the words appear, the key is released">
+      <figure class="demo" role="img" aria-label="Animation: a key is held, the words appear, the key is released">
         <div class="key" aria-hidden="true"><span class="key-glyph">⌘</span><small class="key-name">right</small></div>
         <p class="typed" aria-hidden="true">
           <span class="w">Let's</span> <span class="w">ship</span> <span class="w">it</span> <span class="w">Wednesday</span> <span class="w">and</span> <span class="w">tell</span> <span class="w">the</span> <span class="w">team</span> <span class="w">in</span> <span class="w">standup.</span><span class="cursor"></span>
         </p>
-      </div>
+      </figure>
     </div>
 
     <section>
@@ -207,7 +220,7 @@
         </div>
         <div class="point">
           <h3>Keeps nothing</h3>
-          <p>Audio streams to the speech service only while you hold the key, and is not stored anywhere. Your transcripts stay on your Mac, where you can delete them whenever you like. No account, no sign-in.</p>
+          <p>Audio streams to the speech service only while you hold the key, and is not stored anywhere. Your transcripts stay on your Mac, where you can delete them whenever you like.</p>
         </div>
       </div>
     </section>
@@ -226,11 +239,11 @@
       <h2>How it works</h2>
       <ol class="steps">
         <li><span>Click where you want the text. Any app.</span></li>
-        <li><span>Hold your key (<kbd>right ⌘</kbd> out of the box) and say it. A small pill shows the words as they come.</span></li>
+        <li><span>Hold your key, <kbd>right ⌘</kbd> unless you change it, and say it. A small pill shows the words as they come.</span></li>
         <li><span>Let go. The text is pasted in. Press <kbd>esc</kbd> while holding to throw it away.</span></li>
       </ol>
       <div class="beta">
-        <p><strong>Yada is in beta.</strong> No invite, no account: open it and it works. If something's off, <a href="mailto:anmol@getalai.com?subject=Yada">email Anmol</a>.</p>
+        <p><strong>Yada is in beta.</strong> If something's off, <a href="mailto:anmol@getalai.com?subject=Yada">email Anmol</a>.</p>
       </div>
     </section>
 
@@ -252,8 +265,8 @@
   </main>
 
   <footer>
-    <span>Yada, short for Yet Another Dictation App. Made by <a href="https://getalai.com">Alai</a>.</span>
-    <span class="legal"><a href="privacy/">Privacy</a> · <a href="terms/">Terms</a></span>
+    <span>Yada: Yet Another Dictation App. By <a href="https://getalai.com">Alai</a>.</span>
+    <span class="legal"><a href="https://github.com/getalai/yada-site/releases/latest/download/Yada.dmg">Download</a> · <a href="privacy/">Privacy</a> · <a href="terms/">Terms</a></span>
   </footer>
 </div>
 <script>
@@ -264,12 +277,14 @@
     if (still) { words.forEach(function (w) { w.classList.add('on'); }); demo.classList.add('held'); return; }
     var keys = [['⌘', 'right'], ['fn', ''], ['⇪', 'caps'], ['⌃⌥', 'space'], ['F5', '']];
     var glyph = demo.querySelector('.key-glyph'), name = demo.querySelector('.key-name'), k = 0;
+    var cursor = demo.querySelector('.cursor');
     function run() {
       words.forEach(function (w) { w.classList.remove('on'); });
+      words[0].before(cursor);
       glyph.textContent = keys[k][0]; name.textContent = keys[k][1]; k = (k + 1) % keys.length;
       setTimeout(function () { demo.classList.add('held'); }, 700);
-      words.forEach(function (w, i) { setTimeout(function () { w.classList.add('on'); }, 1300 + i * 320); });
-      setTimeout(function () { demo.classList.remove('held'); }, 1300 + words.length * 320 + 500);
+      words.forEach(function (w, i) { setTimeout(function () { w.classList.add('on'); w.after(cursor); }, 1000 + i * 320); });
+      setTimeout(function () { demo.classList.remove('held'); }, 1000 + words.length * 320 + 500);
     }
     run();
     setInterval(run, 7200);
