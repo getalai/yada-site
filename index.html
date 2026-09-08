@@ -72,8 +72,8 @@
   .wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; }
 
   header { padding: 28px 0 0; }
-  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-  .brand .mark { width: 28px; height: 28px; }
+  .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+  .brand .mark { width: 28px; height: 28px; border-radius: 7px; box-shadow: 0 0 0 1px var(--line); }
   .brand .word { height: 30px; width: auto; margin-top: 6px; }
 
   .hero { padding: 88px 0 56px; }
@@ -119,7 +119,7 @@
   .demo.held .key { transform: translateY(4px); box-shadow: 0 2px 0 var(--keycap-shadow), 0 1px 0 var(--line) inset; }
   .demo.held .key::after { opacity: 1; }
   .typed { font-family: var(--serif); font-size: 26px; line-height: 1.3; color: var(--ink); margin: 0; }
-  .typed .w { opacity: 0; transition: opacity 180ms ease; }
+  .typed .w { opacity: 0; transition: opacity 90ms ease; }
   .typed .w.on { opacity: 1; }
   .typed .cursor { display: inline-block; width: 2px; height: 1.05em; background: var(--ember); vertical-align: -0.15em; margin-left: 2px; animation: blink 1s steps(1) infinite; transition: opacity 120ms ease; }
   .demo:not(.held) .cursor { opacity: 0; animation: none; }
@@ -163,6 +163,8 @@
   footer .legal a { color: var(--ink-3); }
 
   @media (max-width: 560px) {
+    .hero { padding-top: 56px; }
+    ol.steps li { grid-template-columns: 28px 1fr; gap: 12px; }
     footer { flex-direction: column; gap: 4px; }
     figure.demo { grid-template-columns: 80px 1fr; gap: 20px; padding: 24px 20px; }
     .key { width: 80px; height: 80px; font-size: 30px; }
@@ -192,7 +194,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v13"/><path d="m7 11 5 5 5-5"/><path d="M4 21h16"/></svg>
           Download for Mac
         </a>
-        <span class="fine">macOS 13 or later, Apple silicon.</span>
+        <span class="fine">Beta. macOS 13 or later, Apple silicon.</span>
       </div>
 
       <figure class="demo" role="img" aria-label="Animation: a key is held, the words appear, the key is released">
@@ -208,11 +210,11 @@
       <div class="points">
         <div class="point">
           <h3>Right ⌘, or whatever you like</h3>
-          <p>Right ⌘ by default, because nobody uses it. Prefer Fn, Caps Lock, a function key, or ⌃⌥Space? Press it once in Settings and that's your key. Double-tap it for hands-free when you have a lot to say.</p>
+          <p>Because nobody uses it. Prefer Fn, Caps Lock, a function key, or ⌃⌥Space? Press it once in Settings and that's your key. Double-tap it for hands-free when you have a lot to say.</p>
         </div>
         <div class="point">
           <h3>Nothing to set up per app</h3>
-          <p>There is nothing to connect or set up per app. Put your cursor where the words should go and hold the key.</p>
+          <p>No plugins, no allow-lists. Put your cursor where the words should go and hold the key.</p>
         </div>
         <div class="point">
           <h3>Handles how people actually talk</h3>
@@ -239,7 +241,7 @@
       <h2>How it works</h2>
       <ol class="steps">
         <li><span>Click where you want the text. Any app.</span></li>
-        <li><span>Hold your key (<kbd>right ⌘</kbd> until you change it) and talk. A small pill shows the words as they come.</span></li>
+        <li><span>Hold your key and talk. It's <kbd>right ⌘</kbd> until you change it. A small pill shows the words as they come.</span></li>
         <li><span>Let go. The text is pasted in. Press <kbd>esc</kbd> while holding to throw it away.</span></li>
       </ol>
     </section>
