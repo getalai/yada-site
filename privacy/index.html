@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yada privacy policy</title>
+<meta name="description" content="What Yada collects, what it doesn't, and what happens to your voice.">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../legal.css">
+</head>
+<body>
+<div class="wrap">
+  <header><a class="brand" href="../"><img src="../icon.png" alt="" width="28" height="28"><span>Yada</span></a></header>
+
+  <h1>Privacy policy</h1>
+  <p class="meta">Effective 8 September 2026. Applies to the Yada app for macOS, this website, and the services behind them. Yada is made by Alai (Back to the Core Inc., "Alai", "we").</p>
+
+  <div class="summary">
+    <p><strong>The short version.</strong> Audio is streamed only while you hold the key and is not stored. Transcripts stay on your Mac. Our servers see a random device id, how many seconds of audio were relayed, and error types. No account, no email, no sale of data.</p>
+    <p>By downloading, installing or using Yada, or by using this website, you agree to this policy and to the <a href="../terms/">Terms of Service</a>. If you don't agree, please don't use Yada.</p>
+  </div>
+
+  <h2>1. What Yada does</h2>
+  <p>Yada is a dictation app. You hold a key, speak, and release. While the key is held, Yada captures audio from your microphone, streams it to a speech-recognition service, and types the result where your cursor is. Everything below follows from that.</p>
+
+  <h2>2. Information we process</h2>
+  <ul>
+    <li><strong>Audio.</strong> Captured only while you hold your dictation key (or, after a double-tap, until you tap again or press the check mark). It is streamed live from your Mac, through our relay, to Meta's Muse Voice Transcribe API. It is not written to disk on your Mac, not stored on our servers, and the request to Meta carries Meta's zero-data-retention flag on every session. Meta states that under that flag it keeps request metadata only, not audio or transcript content.</li>
+    <li><strong>Transcripts.</strong> Stored only on your Mac, in the Yada data folder. You choose how long they are kept in Settings, and you can delete all of them at any time. Our servers do not store transcripts. If you turn on the optional <strong>AI cleanup</strong> setting (off by default), the text of each dictation is sent to Meta's Muse Spark model through our relay for a cleanup pass and returned to you; we do not store it. Meta states that prompts and completions are not used to train its models.</li>
+    <li><strong>Device information.</strong> When you register with an invite code, Yada generates a random device identifier and we issue that device a credential. The identifier is not linked to your name, email or Apple ID. We use it to enforce per-device usage limits and to revoke access if the service is abused.</li>
+    <li><strong>Usage and diagnostics.</strong> The number of seconds of audio relayed per device, request timestamps, error types, app version and macOS version. Server access logs are disabled. We may in future collect anonymous, aggregated usage analytics (for example which features are used and how often) to improve Yada; if we do, this policy will be updated and the data will not include your dictated content.</li>
+    <li><strong>Crash reports.</strong> If Yada crashes, macOS may offer to send Apple a crash report under Apple's terms. We do not receive it unless you send it to us.</li>
+    <li><strong>Website.</strong> This site is static and sets no cookies of its own. It is hosted on GitHub Pages, which may log requests (IP address, browser) under <a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement">GitHub's privacy statement</a>. Downloads are served from GitHub.</li>
+    <li><strong>Email.</strong> If you write to us, we keep the message so we can reply and keep track of the conversation.</li>
+  </ul>
+
+  <h2>3. What we don't collect</h2>
+  <p>No account, no name, no email address (unless you email us), no contacts, no screen contents, no keystrokes other than the dictation key you chose, and no clipboard contents. Yada uses the clipboard for a moment to paste your text and then restores what was there.</p>
+
+  <h2>4. Why we process it, and the legal basis</h2>
+  <ul>
+    <li>To provide the service you asked for: transcribing what you say and typing it (performance of our agreement with you).</li>
+    <li>To run the service safely: usage limits, abuse prevention, debugging (our legitimate interests, and yours).</li>
+    <li>Optional cleanup: only when you turn it on (your consent, which you can withdraw in Settings at any time).</li>
+  </ul>
+
+  <h2>5. Who we share it with</h2>
+  <ul>
+    <li><strong>Meta Platforms, Inc.</strong> receives audio (and, if enabled, transcript text) to perform speech recognition and cleanup, under the zero-retention terms described above and Meta's own terms for its Model API.</li>
+    <li><strong>Microsoft Azure</strong> hosts our relay, which forwards audio and returns text. It does not retain the content.</li>
+    <li><strong>GitHub</strong> hosts this website and the download files.</li>
+  </ul>
+  <p>We do not sell personal information, and we do not share it for advertising. We may disclose information if the law requires it, to protect the rights or safety of Alai or others, or as part of a merger, acquisition or sale of assets, in which case this policy will continue to apply to the transferred information.</p>
+
+  <h2>6. Where it is processed</h2>
+  <p>Our servers are in the United States, and Meta processes requests in the United States. If you use Yada from elsewhere, your audio is transferred there for processing. The safeguards are the ones described in this policy: nothing is stored beyond the moment of processing.</p>
+
+  <h2>7. How long we keep it</h2>
+  <ul>
+    <li>Audio and transcript content on our side: not retained.</li>
+    <li>Device identifiers, usage counters and diagnostics: while the device is registered, and for up to 12 months after its last use, or longer if needed to enforce our terms or comply with law.</li>
+    <li>Transcripts on your Mac: for as long as you choose in Settings, or until you delete them or uninstall Yada.</li>
+  </ul>
+
+  <h2>8. Your choices and rights</h2>
+  <ul>
+    <li>Choose or change the dictation key, turn cleanup on or off, set transcript retention, or delete all history, in Settings.</li>
+    <li>Stop all monitoring by quitting Yada. Remove all local data by deleting the Yada data folder under Application Support.</li>
+    <li>Depending on where you live (for example the EU, UK or California), you may have rights to access, correct, delete or export personal information about you, to object to or restrict some processing, and not to be discriminated against for exercising them. Because we hold so little, most requests are answered by explaining what we have: a random device id and usage counters. To make a request, email <a href="mailto:support@getalai.com?subject=Yada%20privacy">support@getalai.com</a> from the address you want us to reply to. You may also complain to your local data-protection authority.</li>
+    <li>We do not respond to browser "Do Not Track" signals because this site does not track you.</li>
+  </ul>
+
+  <h2>9. Security</h2>
+  <p>Audio and text travel over TLS. Device credentials are stored on your Mac with restricted file permissions. Our relay authenticates every request. No system is perfectly secure, and Yada is beta software; if you learn of a security problem, please tell us at the address above.</p>
+
+  <h2>10. Children</h2>
+  <p>Yada is not directed to children under 13 (or under 16 where that is the applicable age), and we do not knowingly collect information from them. If you believe a child has used Yada, contact us and we will remove any information we hold.</p>
+
+  <h2>11. Changes</h2>
+  <p>We may update this policy as Yada changes. The effective date at the top will move, and material changes will be noted in the app or on this site. Continuing to use Yada after a change means you accept the updated policy.</p>
+
+  <h2>12. Contact</h2>
+  <p>Alai (Back to the Core Inc.), <a href="mailto:support@getalai.com">support@getalai.com</a>, <a href="https://getalai.com">getalai.com</a>.</p>
+
+  <footer>
+    <span>Yada, by <a href="https://getalai.com">Alai</a>.</span>
+    <span><a href="../terms/">Terms of Service</a></span>
+  </footer>
+</div>
+</body>
+</html>
