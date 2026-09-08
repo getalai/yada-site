@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yada — hold a key, talk, let go</title>
+<meta name="description" content="Yada is a small dictation app for Mac. Hold a key, say what you mean, let go. The words land wherever your cursor is.">
+<meta property="og:title" content="Yada — hold a key, talk, let go">
+<meta property="og:description" content="A small dictation app for Mac. Hold a key, say what you mean, let go. The words land wherever your cursor is.">
+<meta property="og:image" content="https://getalai.github.io/yada-site/icon.png">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.png">
+<style>
+  @font-face {
+    font-family: 'Instrument Serif';
+    font-style: normal; font-weight: 400; font-display: swap;
+    src: url('fonts/InstrumentSerif-Regular.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'Instrument Serif';
+    font-style: italic; font-weight: 400; font-display: swap;
+    src: url('fonts/InstrumentSerif-Italic.woff2') format('woff2');
+  }
+  :root {
+    --bg: #f6f3ed;
+    --bg-raised: #fdfbf7;
+    --ink: #1e1b16;
+    --ink-2: #5e5850;
+    --ink-3: #8a8378;
+    --line: rgba(30, 27, 22, 0.12);
+    --ember: #c4481f;
+    --ember-hover: #a83a15;
+    --ember-soft: rgba(196, 72, 31, 0.1);
+    --keycap: #ffffff;
+    --keycap-shadow: rgba(30, 27, 22, 0.18);
+    --serif: 'Instrument Serif', 'Iowan Old Style', Palatino, 'Times New Roman', serif;
+    --sans: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', 'Segoe UI', sans-serif;
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #131110;
+      --bg-raised: #1c1917;
+      --ink: #f1ece3;
+      --ink-2: #aba396;
+      --ink-3: #7d766b;
+      --line: rgba(241, 236, 227, 0.14);
+      --ember: #e0714b;
+      --ember-hover: #ee8a67;
+      --ember-soft: rgba(224, 113, 75, 0.14);
+      --keycap: #26221f;
+      --keycap-shadow: rgba(0, 0, 0, 0.5);
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--sans); font-size: 17px; line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+
+  header { padding: 28px 0 0; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .brand img { width: 28px; height: 28px; border-radius: 7px; }
+  .brand span { font-family: var(--serif); font-size: 24px; letter-spacing: -0.01em; }
+
+  .hero { padding: 88px 0 56px; }
+  h1 {
+    font-family: var(--serif); font-weight: 400; letter-spacing: -0.02em;
+    font-size: clamp(44px, 8vw, 72px); line-height: 1.02; margin: 0 0 22px;
+  }
+  h1 em { font-style: italic; color: var(--ember); }
+  .lede { font-size: 20px; color: var(--ink-2); max-width: 560px; margin: 0 0 34px; }
+  .cta { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+  .button {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--ember); color: #fff; text-decoration: none;
+    padding: 14px 22px; border-radius: 12px; font-weight: 600; font-size: 17px;
+    transition: background 120ms ease, transform 120ms ease;
+  }
+  .button:hover { background: var(--ember-hover); }
+  .button:active { transform: translateY(1px); }
+  .button svg { width: 18px; height: 18px; }
+  .fine { font-size: 14px; color: var(--ink-3); }
+  .fine a { color: var(--ink-2); }
+
+  /* The demo: a key gets held, words appear, the key lets go. */
+  .demo {
+    margin: 64px 0 0; padding: 36px 28px; border: 1px solid var(--line);
+    border-radius: 18px; background: var(--bg-raised);
+    display: grid; grid-template-columns: 96px 1fr; gap: 28px; align-items: center;
+  }
+  .key {
+    width: 96px; height: 96px; border-radius: 16px; background: var(--keycap);
+    box-shadow: 0 6px 0 var(--keycap-shadow), 0 1px 0 var(--line) inset;
+    display: grid; place-items: center; font-size: 34px; font-family: var(--sans);
+    color: var(--ink); position: relative; transition: transform 140ms ease, box-shadow 140ms ease;
+  }
+  .key small { position: absolute; bottom: 10px; right: 12px; font-size: 11px; color: var(--ink-3); letter-spacing: 0.04em; }
+  .key::after {
+    content: ''; position: absolute; inset: -6px; border-radius: 20px;
+    border: 2px solid var(--ember); opacity: 0; transition: opacity 200ms ease;
+  }
+  .demo.held .key { transform: translateY(4px); box-shadow: 0 2px 0 var(--keycap-shadow), 0 1px 0 var(--line) inset; }
+  .demo.held .key::after { opacity: 1; }
+  .typed { font-family: var(--serif); font-size: 26px; line-height: 1.3; min-height: 2.6em; color: var(--ink); margin: 0; }
+  .typed .w { opacity: 0; transition: opacity 180ms ease; }
+  .typed .w.on { opacity: 1; }
+  .typed .cursor { display: inline-block; width: 2px; height: 1.05em; background: var(--ember); vertical-align: -0.15em; margin-left: 2px; animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) {
+    .typed .cursor { animation: none; }
+  }
+
+  section { padding: 56px 0; border-top: 1px solid var(--line); }
+  h2 { font-family: var(--serif); font-weight: 400; font-size: 34px; letter-spacing: -0.015em; margin: 0 0 26px; }
+  .points { display: grid; gap: 28px; }
+  .point h3 { font-size: 18px; margin: 0 0 6px; font-weight: 600; }
+  .point p { margin: 0; color: var(--ink-2); }
+  ol.steps { list-style: none; padding: 0; margin: 0; counter-reset: s; display: grid; gap: 18px; }
+  ol.steps li { display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: baseline; }
+  ol.steps li::before {
+    counter-increment: s; content: counter(s);
+    font-family: var(--serif); font-size: 26px; color: var(--ember); line-height: 1;
+  }
+  kbd {
+    font-family: var(--sans); font-size: 0.92em; padding: 1px 7px 2px; border-radius: 6px;
+    background: var(--bg-raised); border: 1px solid var(--line); box-shadow: 0 1px 0 var(--line);
+  }
+  .faq dt { font-weight: 600; margin: 22px 0 4px; }
+  .faq dt:first-child { margin-top: 0; }
+  .faq dd { margin: 0; color: var(--ink-2); }
+
+  .beta { background: var(--ember-soft); border-radius: 14px; padding: 18px 20px; margin-top: 36px; }
+  .beta p { margin: 0; }
+
+  footer { padding: 40px 0 56px; border-top: 1px solid var(--line); color: var(--ink-3); font-size: 14px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  footer a { color: var(--ink-2); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  @media (max-width: 560px) {
+    .demo { grid-template-columns: 1fr; gap: 22px; padding: 28px 22px; }
+    .key { width: 80px; height: 80px; font-size: 30px; }
+    .typed { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="brand" href="./"><img src="icon.png" alt="" width="28" height="28"><span>Yada</span></a>
+  </header>
+
+  <main>
+    <div class="hero">
+      <h1>Hold a key.<br>Talk. <em>Let go.</em></h1>
+      <p class="lede">Yada types what you said into whatever you were writing. Mail, Slack, a doc, the terminal, a text box in a browser. Anywhere you can put a cursor.</p>
+      <div class="cta">
+        <a class="button" href="https://github.com/getalai/yada-site/releases/latest/download/Yada.dmg">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v13"/><path d="m7 11 5 5 5-5"/><path d="M4 21h16"/></svg>
+          Download for Mac
+        </a>
+        <span class="fine">macOS 13 or later, Apple silicon. Free while it's in beta.</span>
+      </div>
+
+      <div class="demo" aria-label="Animation: a key is held, the words appear, the key is released">
+        <div class="key" aria-hidden="true">⌘<small>right</small></div>
+        <p class="typed" aria-hidden="true">
+          <span class="w">Let's</span> <span class="w">ship</span> <span class="w">it</span> <span class="w">Wednesday</span> <span class="w">and</span> <span class="w">tell</span> <span class="w">the</span> <span class="w">team</span> <span class="w">in</span> <span class="w">standup.</span><span class="cursor"></span>
+        </p>
+      </div>
+    </div>
+
+    <section>
+      <h2>What it does, and doesn't</h2>
+      <div class="points">
+        <div class="point">
+          <h3>Works in every app</h3>
+          <p>There is nothing to connect or set up per app. Put your cursor where the words should go and hold the key.</p>
+        </div>
+        <div class="point">
+          <h3>Handles how people actually talk</h3>
+          <p>Punctuation and capitals are taken care of. If you switch between English and Hindi mid-sentence, that's fine. Turn on cleanup and it also drops the ums and applies your "no wait, Wednesday" corrections.</p>
+        </div>
+        <div class="point">
+          <h3>Keeps nothing</h3>
+          <p>Audio streams to the speech service only while you hold the key, and is not stored anywhere. Your transcripts stay on your Mac, where you can delete them whenever you like. No account, no sign-in.</p>
+        </div>
+        <div class="point">
+          <h3>Any key you want</h3>
+          <p>Right ⌘ by default, because nobody uses it. Pick a different key or combination in Settings. Double-tap for hands-free when you have a lot to say.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>How it works</h2>
+      <ol class="steps">
+        <li><span>Click where you want the text. Any app.</span></li>
+        <li><span>Hold <kbd>right ⌘</kbd> and say it. A small pill shows the words as they come.</span></li>
+        <li><span>Let go. The text is pasted in. Press <kbd>esc</kbd> while holding to throw it away.</span></li>
+      </ol>
+      <div class="beta">
+        <p><strong>Yada is in a private beta.</strong> The first time you open it, it asks for an invite code. If you don't have one, <a href="mailto:anmol@getalai.com?subject=Yada%20invite">ask Anmol</a>.</p>
+      </div>
+    </section>
+
+    <section class="faq">
+      <h2>Questions</h2>
+      <dl>
+        <dt>Which Macs?</dt>
+        <dd>Apple silicon (M1 and later) on macOS 13 Ventura or newer. Intel isn't supported yet.</dd>
+        <dt>What permissions does it need?</dt>
+        <dd>Microphone, to hear you. Accessibility, to type into other apps and to notice the key. Input Monitoring on some macOS versions. It asks for each one when it's needed and says why.</dd>
+        <dt>Does it type into password fields?</dt>
+        <dd>No. When macOS has secure input on, Yada steps aside and tells you.</dd>
+        <dt>What does the speech recognition run on?</dt>
+        <dd>Meta's Muse Voice Transcribe, through a small relay, with the zero-retention flag set on every session. Nothing you say is stored by Meta or by us.</dd>
+        <dt>Is it free?</dt>
+        <dd>During the beta, yes. If it costs more to run than a side project should, there will be a small price later, and beta users will hear first.</dd>
+      </dl>
+    </section>
+  </main>
+
+  <footer>
+    <span>Yada, short for Yet Another Dictation App.</span>
+    <span>Made by <a href="mailto:anmol@getalai.com">Anmol Sood</a>.</span>
+  </footer>
+</div>
+<script>
+  (function () {
+    var demo = document.querySelector('.demo');
+    var words = demo.querySelectorAll('.w');
+    var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (still) { words.forEach(function (w) { w.classList.add('on'); }); demo.classList.add('held'); return; }
+    function run() {
+      words.forEach(function (w) { w.classList.remove('on'); });
+      setTimeout(function () { demo.classList.add('held'); }, 700);
+      words.forEach(function (w, i) { setTimeout(function () { w.classList.add('on'); }, 1300 + i * 320); });
+      setTimeout(function () { demo.classList.remove('held'); }, 1300 + words.length * 320 + 500);
+    }
+    run();
+    setInterval(run, 7200);
+  })();
+</script>
+</body>
+</html>
