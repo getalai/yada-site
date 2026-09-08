@@ -64,8 +64,9 @@
 
   header { padding: 28px 0 0; }
   .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-  .brand img { width: 28px; height: 28px; border-radius: 7px; }
-  .brand span { font-family: var(--serif); font-size: 24px; letter-spacing: -0.01em; }
+  .brand .mark { width: 28px; height: 28px; }
+  .brand .word { height: 30px; width: auto; margin-top: 6px; }
+  @media (prefers-color-scheme: dark) { .brand .word { filter: invert(1) hue-rotate(180deg) brightness(1.15); } }
 
   .hero { padding: 88px 0 56px; }
   h1 {
@@ -160,7 +161,7 @@
 <body>
 <div class="wrap">
   <header>
-    <a class="brand" href="./"><img src="icon.png" alt="" width="28" height="28"><span>Yada</span></a>
+    <a class="brand" href="./"><img class="mark" src="icon.png" alt="" width="28" height="28"><img class="word" src="wordmark.svg" alt="Yada" height="30"></a>
   </header>
 
   <main>
