@@ -100,6 +100,7 @@
     display: grid; place-items: center; font-size: 34px; font-family: var(--sans);
     color: var(--ink); position: relative; transition: transform 140ms ease, box-shadow 140ms ease;
   }
+  .key .key-glyph { font-size: 32px; letter-spacing: -0.02em; }
   .key small { position: absolute; bottom: 10px; right: 12px; font-size: 11px; color: var(--ink-3); letter-spacing: 0.04em; }
   .key::after {
     content: ''; position: absolute; inset: -6px; border-radius: 20px;
@@ -175,7 +176,7 @@
       </div>
 
       <div class="demo" aria-label="Animation: a key is held, the words appear, the key is released">
-        <div class="key" aria-hidden="true">⌘<small>right</small></div>
+        <div class="key" aria-hidden="true"><span class="key-glyph">⌘</span><small class="key-name">right</small></div>
         <p class="typed" aria-hidden="true">
           <span class="w">Let's</span> <span class="w">ship</span> <span class="w">it</span> <span class="w">Wednesday</span> <span class="w">and</span> <span class="w">tell</span> <span class="w">the</span> <span class="w">team</span> <span class="w">in</span> <span class="w">standup.</span><span class="cursor"></span>
         </p>
@@ -254,8 +255,11 @@
     var words = demo.querySelectorAll('.w');
     var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (still) { words.forEach(function (w) { w.classList.add('on'); }); demo.classList.add('held'); return; }
+    var keys = [['⌘', 'right'], ['fn', ''], ['⇪', 'caps'], ['⌃⌥', 'space'], ['F5', '']];
+    var glyph = demo.querySelector('.key-glyph'), name = demo.querySelector('.key-name'), k = 0;
     function run() {
       words.forEach(function (w) { w.classList.remove('on'); });
+      glyph.textContent = keys[k][0]; name.textContent = keys[k][1]; k = (k + 1) % keys.length;
       setTimeout(function () { demo.classList.add('held'); }, 700);
       words.forEach(function (w, i) { setTimeout(function () { w.classList.add('on'); }, 1300 + i * 320); });
       setTimeout(function () { demo.classList.remove('held'); }, 1300 + words.length * 320 + 500);
