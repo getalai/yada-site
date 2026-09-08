@@ -74,7 +74,7 @@
   header { padding: 28px 0 0; }
   .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
   .brand .mark { width: 28px; height: 28px; border-radius: 7px; box-shadow: 0 0 0 1px var(--line); }
-  .brand .word { height: 30px; width: auto; margin-top: 6px; }
+  .brand .word { height: 30px; width: auto; margin-top: 3px; }
 
   .hero { padding: 88px 0 56px; }
   h1 {
@@ -156,6 +156,7 @@
 
   .beta { background: var(--bg-raised); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; margin-top: 36px; }
   .beta p { margin: 0; }
+  .beta a { display: inline-block; padding: 6px 0; margin: -6px 0; }
 
   footer { padding: 40px 0 56px; border-top: 1px solid var(--line); color: var(--ink-3); font-size: 14px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
   footer a { color: var(--ink-2); text-decoration: none; display: inline-block; padding: 8px 0; }
@@ -166,6 +167,7 @@
     .hero { padding-top: 56px; }
     ol.steps li { grid-template-columns: 28px 1fr; gap: 12px; }
     footer { flex-direction: column; gap: 4px; }
+    footer .legal a { padding: 8px 6px; margin: 0 -6px; }
     figure.demo { grid-template-columns: 80px 1fr; gap: 20px; padding: 24px 20px; }
     .key { width: 80px; height: 80px; font-size: 30px; }
     .typed { font-size: 22px; }
@@ -210,7 +212,7 @@
       <div class="points">
         <div class="point">
           <h3>Right ⌘, or whatever you like</h3>
-          <p>Because nobody uses it. Prefer Fn, Caps Lock, a function key, or ⌃⌥Space? Press it once in Settings and that's your key. Double-tap it for hands-free when you have a lot to say.</p>
+          <p>Because nobody uses it. Prefer Fn, Caps Lock, a function key, or <kbd>⌃⌥Space</kbd>? Press it once in Settings and that's your key. Double-tap it for hands-free when you have a lot to say.</p>
         </div>
         <div class="point">
           <h3>Nothing to set up per app</h3>
@@ -230,10 +232,10 @@
     <section class="why">
       <h2>Why another one</h2>
       <p>Dictation should be as free as typing. Somewhere along the way it became a subscription priced like a streaming service, with Wispr Flow at the front of the line.</p>
-      <p>Yada is the part everyone actually uses: hold a key, talk, let go. No accounts, no dashboard, no plans. The speech recognition behind it costs a few cents an hour, and the app is written to stay out of the way. That keeps it cheap to run, and cheap to run is how it stays almost free.</p>
+      <p>Yada is the part everyone actually uses: hold a key, talk, let go. No accounts, no dashboard, no plans. The speech recognition behind it costs a few cents an hour, and there's nothing else to pay for. That keeps it cheap to run, and cheap to run is how it stays almost free.</p>
       <div class="price">
         <div><span class="price-now">Almost free</span> <span class="price-note">and that's the point</span></div>
-        <div class="price-later">Free to start. If you use it a lot, a couple of dollars a month covers the speech bills, and that's all it will ever ask for. The app shows you where you stand.</div>
+        <div class="price-later">Free to start. If you use it a lot, a couple of dollars a month covers the speech bills. Nothing else. The app shows you where you stand.</div>
       </div>
     </section>
 
